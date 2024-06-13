@@ -4,14 +4,18 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
     "build": "eslint --fix ./**/*.js && vite build"
   },
   "devDependencies": {
-		"eslint": "^8.54.0",
-		"@stylistic/eslint-plugin-js": "^1.6.1",
+    "@stylistic/eslint-plugin-js": "^1.6.1",
+    "eslint": "^8.54.0",
     "vite": "^5.2.13"
   },
   "dependencies": {
+    "@jspsych/plugin-external-html": "^1.1.3",
+    "axios": "^1.7.2",
     "jspsych": "^7.3.4"
   }
 }
