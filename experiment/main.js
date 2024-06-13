@@ -6,7 +6,7 @@ import "./style.css";
 // in case the user refreshes the page or exits
 window.addEventListener("beforeunload", function (e) {
 	e.preventDefault();
-	incomplete_save();
+	// incomplete_save();
 	return;
 });
 

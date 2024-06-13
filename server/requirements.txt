@@ -1,5 +1,5 @@
 autora
 autora-core
 numpy
-flask>=2.0
-gunicorn
+fastapi
+uvicorn
