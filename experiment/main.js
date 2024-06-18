@@ -1,5 +1,5 @@
 import { initJsPsych } from "jspsych";
-import jsPsychExternalHtml from '@jspsych/plugin-external-html';
+import jsPsychBrowserCheck from '@jspsych/plugin-browser-check';
 import "./style.css";
 
 // in case the user refreshes the page or closes the browser
@@ -8,26 +8,14 @@ window.addEventListener("beforeunload", function (e) {
 	return;
 });
 
-// sample function that might be used to check if a participant has given consent to participate
-var check_consent = function() {
-	if (document.getElementById('consent_checkbox').checked) {
-		return true;
-	}
-	else {
-		alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
-		return false;
-	}
-};
-
-var consent = {
-	type: jsPsychExternalHtml,
-	url: "components/consent.html",
-	cont_btn: "start",
-	check_fn: check_consent
+var browserCheck = {
+	type: jsPsychBrowserCheck,
+	minimum_width: 1000,
+	minimum_height: 600
 };
 
 // define the timeline
-var timeline = [consent];
+var timeline = [browserCheck];
 
 // initialize jspsych
 var jsPsych = initJsPsych({
