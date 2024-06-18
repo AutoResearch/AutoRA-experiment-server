@@ -1,96 +1,143 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.5rem;
+  --page-background-color: #fff;
+  --foreground-color: #1a1919;
+  --link-color: #275a90;
+  --line-divider-color: #595959;
+  --heading-color: #000;
+  --primary-button-background: #ffb347;
+  --primary-button-foreground: #fff;
+  --primary-button-hover-foreground: #bfbfbf;
 }
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+html,body,button,option {
+  font-family: system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 2rem;
 }
-a:hover {
-  color: #535bf2;
+html,body {
+  width: 100%;
 }
-
+html {
+  height: 100%;
+}
 body {
+  max-width: 1200px;
+  margin: auto;
+  background: var(--page-background-color);
+  color: var(--foreground-color);
+  padding: 36px
+}
+p,hr {
+  margin-bottom: 16px
+}
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: underline;
+}
+hr {
+  border-bottom: 1px solid var(--line-divider-color);
+}
+var,em,i {
+  font-style: italic;
+}
+dt,strong,b {
+  font-weight: 600;
+}
+* {
+  border: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-sizing: border-box;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  max-width: 100%;
+  padding: 0;
+  vertical-align: baseline;
 }
-
+ol,ul {
+  margin-bottom: 1.2rem;
+  margin-left: 4rem;
+}
+li dl,li ol,li ul {
+  margin-bottom: 0;
+}
+blockquote {
+  margin-bottom: 1rem;
+  margin-left: 4rem;
+}
+h1,h2,h3,h4,h5,h6 {
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 3rem;
+  margin-top: 5rem;
+}
+h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 2rem;
+  margin-top: 2rem;
+  text-decoration: underline;
+}
+h3 {
+  font-size: 1.6rem;
+  line-height: 1.5rem;
+  margin-top: 2rem;
+}
+h4 {
+  font-size: 1.4rem;
+  line-height: 1.5rem;
+  margin-top: 1.5rem;
+}
+h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+}
+h6 {
+  color: #595959;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+  text-transform: uppercase;
 }
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* BUTTON CSS */
+button {
+  border-radius: 3.6px;
+  display: inline-block;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: inline;
+  margin-bottom: 1.5rem;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1.5rem;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+button[type="submit"] {
+  background: var(--primary-button-background);
+  color: var(--primary-button-foreground);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
+button[type="submit"]:hover {
+  background: var(--primary-button-background);
+  color: var(--primary-button-hover-foreground);
 }
 
-.card {
-  padding: 2em;
-}
 
-.read-the-docs {
-  color: #888;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.recontact {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
 }
