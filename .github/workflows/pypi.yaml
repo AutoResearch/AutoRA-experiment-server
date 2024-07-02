@@ -1,9 +1,10 @@
 name: PyPi Package Upload
 # PyPi for this repository, not the web app that this repository produces
 
-on:
-    workflow_dispatch:
+# This action is manually triggered
+on: workflow_dispatch
 
+# Disallow multiple parallel runs of this action        
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true

@@ -1,5 +1,5 @@
 [project]
-name="AutoRA-Experiment-Web-App"
+name="Autora-Experiment-Web-App"
 version="2024.07"
 description = "AutoRA Web Experiment Template Project"
 readme = {file = "README.md", content-type = "text/markdown"}
