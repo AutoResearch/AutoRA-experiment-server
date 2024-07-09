@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "build": "eslint --fix ./**/*.js && vite build"
+    "build": "eslint --fix ./**/*.js && vite build",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "devDependencies": {
     "@stylistic/eslint-plugin-js": "^1.6.1",

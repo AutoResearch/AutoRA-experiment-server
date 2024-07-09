@@ -1,0 +1,80 @@
+# questions
+project_name:
+  type: str
+  help: What is your project name?
+  validator: |-
+    {% if not project_name %}
+    Please enter a valid project name.
+    {% endif %}
+  
+basic_or_advanced:
+  type: str
+  help: Would you like to use basic or advanced features?
+  choices:
+    - Basic
+    - Advanced
+
+theorists:
+  type: str
+  help: Which theorists would you like to install?
+  multiselect: True
+  choices:
+    - None
+    - autora[theorist-darts]
+    - autora[theorist-bms]
+    - autora[theorist-bsr]
+  when: "{{ basic_or_advanced == 'Advanced' }}"
+  default: "None"
+  validator: "{% if 'None' in theorists and theorists != ['None'] %}Cannot choose 'None' and another option {% endif %}"
+
+experimentalists:
+  type: str
+  help: Which experimentalists would you like to install?
+  multiselect: True
+  choices:
+    - None
+    - autora[experimentalist-inequality]
+    - autora[experimentalist-novelty]
+    - autora[experimentalist-nearest-value]
+    - autora[experimentalist-model-disagreement]
+    - autora[experimentalist-uncertainty]
+    - autora[experimentalist-leverage]
+    - autora[experimentalist-falsification]
+    - autora[experimentalist-mixture]
+    - autora[experimentalist-prediction-filter]
+  when: "{{ basic_or_advanced == 'Advanced' }}" 
+  default: "None"
+  validator: "{% if 'None' in experimentalists and experimentalists != ['None'] %}Cannot choose 'None' and another option {% endif %}"
+
+firebase:
+  type: bool
+  help: Would you like to set up a firebase experiment?
+  default: false
+  when: "{{ basic_or_advanced == 'Advanced' }}"  
+
+project_type:
+  type: str
+  help: Which project do you want to configure your webapp with?
+  choices:
+    - Blank
+    - HTML Button
+    - Reaction Time
+    - Multi Choice Survey
+    - Multi Select Survey
+    - Save trial parameters
+    - Lexical decision
+    - Pause/Unpause
+    - Canvas Slider Response
+    - JsPsych - Stroop
+    - JsPsych - RDK
+    - SweetBean
+    - SuperExperiment
+  when: "{{ firebase }}"
+
+
+_subdirectory: template
+
+_tasks:
+  - python __hooks/__postprocess.py #dynamically create files if chosen from jspsych examples
+  - rm -r __hooks
+  - cd experiment; npm install; npm run lint
