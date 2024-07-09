@@ -1,0 +1,175 @@
+import requests
+import textwrap
+import pathlib
+import ast
+
+# map example names to names of jspsych examples
+__example_names = {
+    "HTML Button": "html-button",
+    "Reaction Time": "reaction-time",
+    "Multi Choice Survey": "multi-choice-survey",
+    "Multi Select Survey": "multi-select-survey",
+    "Save Trial Parameters": "save-trial-parameters",
+    "Lexical Decision": "lexical-decision",
+    "Pause/Unpause": "pause-unpause",
+    "Canvas Slider Response": "canvas-slider-response",
+    "Blank": "Blank",
+    "JsPsych - RDK": "JsPsych - RDK",
+    "JsPsych - Stroop": "JsPsych - Stroop",
+    "Basic": "Basic",
+    "SuperExperiment": "SuperExperiment",
+    "SweetBean": "SweetBean",
+}
+
+# dependencies for each jspsych example
+__sample_experiment_deps = {
+    "html-button": (
+        "jspsych-html-button-response.html",
+        ["jsPsychHtmlButtonResponse from '@jspsych/plugin-html-button-response'"],
+    ),
+    "reaction-time": (
+        "jspsych-serial-reaction-time.html",
+        ["jsPsychSerialReactionTime from '@jspsych/plugin-serial-reaction-time'"],
+    ),
+    "multi-choice-survey": (
+        "jspsych-survey-multi-choice.html",
+        ["jsPsychSurveyMultiChoice from '@jspsych/plugin-survey-multi-choice'"],
+    ),
+    "multi-select-survey": (
+        "jspsych-survey-multi-select.html",
+        ["jsPsychSurveyMultiSelect from '@jspsych/plugin-survey-multi-select'"],
+    ),
+    "save-trial-parameters": (
+        "save-trial-parameters.html",
+        [
+            "jsPsychHtmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response'",
+            "jsPsychHtmlButtonResponse from '@jspsych/plugin-html-button-response'",
+            "jsPsychCanvasKeyboardResponse from '@jspsych/plugin-canvas-keyboard-response'",
+        ],
+    ),
+    "lexical-decision": (
+        "lexical-decision.html",
+        [
+            "jsPsychHtmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response'",
+            "jsPsychHtmlButtonResponse from '@jspsych/plugin-html-button-response'",
+        ],
+    ),
+    "pause-unpause": (
+        "pause-unpause.html",
+        ["jsPsychHtmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response'"],
+    ),
+    "canvas-slider-response": (
+        "jspsych-canvas-slider-response.html",
+        ["jsPsychCanvasSliderResponse from '@jspsych/plugin-canvas-slider-response'"],
+    ),
+}
+
+
+def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
+    """Scrape js code from jspsych's GitHub examples page and write to an output file
+
+    Args:
+        jspsych_example_name (str): Name of jspsych examples. Must be a key in __sample_experiment_deps variable
+        output_filepath (str): File path to write output js file to
+
+    Returns:
+        bool: True if successful, False otherwise
+    """
+    if jspsych_example_name in [
+        "Blank",
+        "JsPsych - RDK",
+        "JsPsych - Stroop",
+        "Basic",
+        "SuperExperiment",
+        "SweetBean",
+    ]:
+        return True
+
+    if jspsych_example_name not in __sample_experiment_deps.keys():
+        print("Please enter a valid jspsych example name")
+
+        return False
+
+    try:
+        response = requests.get(
+            f"https://raw.githubusercontent.com/jspsych/jsPsych/main/examples/{__sample_experiment_deps[jspsych_example_name][0]}"
+        )
+    except Exception as e:
+        print(f"{e}: Please check your network connection")
+        return False
+
+    status = response.status_code
+
+    if status != 200:
+        print(f"Error - Unable to fetch data. Status code {status}")
+        return
+
+    response_text = response.text
+
+    # Extract js code from between final script tags
+    script_tag_onwards = response_text.split("<script>")[-1]
+    js_script = textwrap.dedent(script_tag_onwards.split("</script>")[0]).strip() + "\n"
+    js_script = textwrap.indent(js_script, "  ")
+
+    # Get dependencies
+    proj_deps = __sample_experiment_deps[jspsych_example_name][1]
+
+    output_file_text = ""
+    import_dep_text = ""
+    comment_text = "// To use the jsPsych package first install jspsych using `npm install jspsych`\n"
+
+    # Add import text to output file and comments instructing how to install necessary dependencies
+    for dep in proj_deps:
+        import_dep_text += f"import {dep}\n"
+
+        dep_package_name = dep.split("from ")[1]
+        print(dep_package_name)
+        comment_text += f"// This example uses the {dep_package_name[17:-1]} plugin. Install it via `npm install {dep_package_name[1:-1]}`\n"
+
+    # Build output file
+    output_file_text += textwrap.dedent(comment_text)
+    output_file_text += textwrap.dedent(
+        """
+        // Here is documentation on how to program a jspsych experiment using npm:
+        // https://www.jspsych.org/7.3/tutorials/hello-world/#option-3-using-npm
+
+        import {initJsPsych} from 'jspsych';
+        import 'jspsych/css/jspsych.css'
+    """
+    )
+
+    output_file_text += import_dep_text
+    output_file_text += "\nconst main = async (id, condition) => {\n"
+    output_file_text += js_script
+    output_file_text += "} \n\nexport default main\n"
+
+    # Write to file
+    with open(output_filepath, "w") as js_file:
+        js_file.write(output_file_text)
+
+    return True
+
+
+def write_additional_requirements():
+    """
+    Write additional requirements to install for theorists/experimentalists to requirements file
+    """
+    requirements_file = (
+        pathlib.Path.cwd() / "experiment" / "research_hub" / "requirements.txt"
+    )
+
+    if requirements_file.is_file():
+        theorist_list = ast.literal_eval("{{ theorists }}")
+        experimentalist_list = ast.literal_eval("{{ experimentalists }}")
+        with open(requirements_file, "a") as f:
+            if theorist_list != ["None"]:
+                for theorist in theorist_list:
+                    f.write(theorist + "\n")
+
+            if experimentalist_list != ["None"]:
+                for experimentalist in experimentalist_list:
+                    f.write(experimentalist + "\n")
+
+
+write_to_js(__example_names["{{ project_type }}"], f"experiment/main.js")
+write_additional_requirements()

@@ -1,0 +1,2 @@
+autora-core
+autora-synthetic
