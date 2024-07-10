@@ -2,6 +2,7 @@
 name="Autora-Experiment-Web-App"
 description = "AutoRA Web Experiment Template Project"
 readme = {file = "README.md", content-type = "text/markdown"}
+version = "2024.07"
 license = {text = "MIT License"}
 authors = [{name="Varun Narayan", email="varun.narayan@gatech.edu"}, 
 {name="Katarzyna Rachwal", email="krachwal3@gatech.edu"}]
