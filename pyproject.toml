@@ -5,17 +5,16 @@ readme = {file = "README.md", content-type = "text/markdown"}
 license = {text = "MIT License"}
 authors = [{name="Varun Narayan", email="varun.narayan@gatech.edu"}, 
 {name="Katarzyna Rachwal", email="krachwal3@gatech.edu"}]
-
-[build-system]
-requires = ["setuptools", "wheel", "setuptools_scm"]
-build-backend = "setuptools.build_meta"
-
 dependencies = [
     "fastapi",
     "uvicorn",
     "autora",
     "autora-core"
 ]
+
+[build-system]
+requires = ["setuptools", "wheel", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
 
 [project.urls]
 "GitHub" = "https://github.com/AutoResearch"
