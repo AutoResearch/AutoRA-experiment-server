@@ -15,7 +15,7 @@ dependencies = [
 
 [build-system]
 requires = ["setuptools", "wheel", "setuptools_scm"]
-build-web-app = "setuptools.build_meta"
+build-autora-experiment-web-server = "setuptools.build_meta"
 
 [project.urls]
 "GitHub" = "https://github.com/AutoResearch"
