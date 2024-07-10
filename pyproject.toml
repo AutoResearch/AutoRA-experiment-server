@@ -30,7 +30,7 @@ include-package-data = true
 "server" = ["dist/*"]
 
 [tool.setuptools.cmdclass]
-build_web_ui = {cmdclass = "build_web_ui.BuildFrontendCommand"}
+build_web_ui = "build_web_ui.BuildFrontendCommand"
 
 [project.scripts]
 start = "backend.run:main"
