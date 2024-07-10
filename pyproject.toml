@@ -1,8 +1,36 @@
 [project]
 name="Autora-Experiment-Web-App"
-version="2024.07"
 description = "AutoRA Web Experiment Template Project"
 readme = {file = "README.md", content-type = "text/markdown"}
 license = {text = "MIT License"}
 authors = [{name="Varun Narayan", email="varun.narayan@gatech.edu"}, 
 {name="Katarzyna Rachwal", email="krachwal3@gatech.edu"}]
+
+[build-system]
+requires = ["setuptools", "wheel", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "autora",
+    "autora-core"
+]
+
+[project.urls]
+"GitHub" = "https://github.com/AutoResearch"
+"PyPI" = "https://pypi.org/project/autora/"
+
+[tool.setuptools]
+packages = ["backend"]
+package-dir = {"" = "backend"}
+include-package-data = true
+
+[tool.setuptools.package-data]
+"backend" = ["static/*", "templates/*"]
+
+[tool.setuptools.cmdclass]
+build_web_ui = {cmdclass = "build_web_ui.BuildFrontendCommand"}
+
+[project.scripts]
+start-my-app = "backend.run:main"
