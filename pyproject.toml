@@ -22,12 +22,12 @@ build-webserver = "setuptools.build_meta"
 "PyPI" = "https://pypi.org/project/autora/"
 
 [tool.setuptools]
-packages = ["webserver"]
-package-dir = {"" = "webserver"}
+#packages = ["webserver"]
+#package-dir = {"" = "webserver"}
 include-package-data = true
 
 [tool.setuptools.package-data]
-"webserver" = ["dist/*"]
+#"webserver" = ["./dist/*"]
 
 [project.scripts]
 start = "webserver:run"
