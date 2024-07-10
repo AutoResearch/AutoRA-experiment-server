@@ -28,7 +28,7 @@ RUN npm run build
 
 # create virtual environment for FastAPI web server and install dependencies
 WORKDIR ${BASE_PATH}
-COPY server ./server
+COPY autora-experiment-web-server ./server
 # copy previously built HTML+Javascript files to FastAPI web server directory
 RUN cp -rf experiment/dist server/dist
 WORKDIR ${BASE_PATH}/server
