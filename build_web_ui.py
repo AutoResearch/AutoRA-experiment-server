@@ -12,6 +12,4 @@ class BuildFrontendCommand(Command):
         pass
 
     def run(self):
-        os.system("cd experiment && npm ci && npm run build")
-        os.system("pwd")
-        os.system("cp build ../server")
+        os.system("cd experiment && npm ci && npm run build && cp -rf build ../server")
