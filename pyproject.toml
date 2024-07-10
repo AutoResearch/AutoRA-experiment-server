@@ -1,5 +1,5 @@
 [project]
-name="Autora-Experiment-Web-App"
+name="autora-experiment-web"
 description = "AutoRA Web Experiment Template Project"
 readme = {file = "README.md", content-type = "text/markdown"}
 version = "2024.07"
@@ -30,7 +30,7 @@ include-package-data = true
 "server" = ["dist/*"]
 
 [tool.setuptools.cmdclass]
-build_web_ui = "build_web_ui.BuildFrontendCommand"
+build_web_ui = {attr = "build_web_ui.BuildFrontendCommand"}
 
 [project.scripts]
 start = "backend.run:main"
