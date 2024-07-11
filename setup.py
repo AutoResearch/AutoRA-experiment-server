@@ -22,3 +22,5 @@ setup(
         'build_web_ui': BuildFrontendCommand,
     }
 )
+
+if __name__ == '__main__': setup()
