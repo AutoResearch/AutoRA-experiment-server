@@ -9,8 +9,8 @@ __example_names = {
     "Reaction Time": "reaction-time",
     "Multi Choice Survey": "multi-choice-survey",
     "Multi Select Survey": "multi-select-survey",
-    "Save Trial Parameters": "save-trial-parameters",
-    "Lexical Decision": "lexical-decision",
+    "Save trial parameters": "save-trial-parameters",
+    "Lexical decision": "lexical-decision",
     "Pause/Unpause": "pause-unpause",
     "Canvas Slider Response": "canvas-slider-response",
     "Blank": "Blank",
@@ -154,13 +154,25 @@ def write_additional_requirements():
     """
     Write additional requirements to install for theorists/experimentalists to requirements file
     """
+
     requirements_file = (
         pathlib.Path.cwd() / "experiment" / "research_hub" / "requirements.txt"
     )
 
     if requirements_file.is_file():
-        theorist_list = ast.literal_eval("{{ theorists }}")
-        experimentalist_list = ast.literal_eval("{{ experimentalists }}")
+        # Copier populates {{ theorists }} and {{ experimentalists }} as either a string of a list of choices if multiple are chosen
+        # (for example "['autora[theorist-darts]' , 'autora[theorist-bms]']") or a string of just the chosen option (for example "autora[theorist-darts]")
+        # the operations below convert everything to a string literal of a list of chosen options
+        # (for example "autora[theorist-darts]" would become "['autora[theorist-darts]']")
+
+        stripped_theorist_list = "{{ theorists }}".strip("[']")
+        theorist_list_str = "['" + stripped_theorist_list + "]']"
+        stripped_exp_list = "{{ experimentalists }}".strip("[']")
+        exp_list_str = "['" + stripped_exp_list + "]']"
+
+        theorist_list = ast.literal_eval(theorist_list_str)
+        experimentalist_list = ast.literal_eval(exp_list_str)
+
         with open(requirements_file, "a") as f:
             if theorist_list != ["None"]:
                 for theorist in theorist_list:
