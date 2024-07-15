@@ -1,0 +1,60 @@
+name: Build and Deploy to Cloud
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install NodeJS
+      uses: actions/setup-node@v4
+
+    - name: Install NodeJS dependencies
+      run: npm ci
+
+    - name: Build NodeJS
+      run: npm run build
+
+    - name: Copy NodeJS to web server folder
+      run: cp -rf dist ../server/dist
+
+    - name: Prepare SSH dir
+      run: |
+        mkdir -pv ~/.ssh/
+
+    - name: Write key
+      env:
+        KEY: ${{ secrets.KEY }}
+      run: |
+        echo "$KEY" > ~/.ssh/actions.key
+        chmod 600 ~/.ssh/actions.key
+
+    - name: Write SSH config
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        cat >>~/.ssh/config <<END
+        Host ec2
+            HostName $HOST
+            User $USERNAME
+            IdentityFile ~/.ssh/actions.key
+            StrictHostKeyChecking=no
+            ServerAliveCountMax=10
+            ServerAliveInterval=60
+        END
+
+    - name: Build Python web server
+      run: |
+        python -m venv venv
+        . venv/bin/activate
+        ./venv/bin/python -m pip install -r requirements.txt
+
+    - name: Start web server
+      run: |
+        ./start_server.sh

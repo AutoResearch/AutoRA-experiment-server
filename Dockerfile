@@ -46,5 +46,5 @@ EXPOSE 80
 
 # start web and gRPC servers
 WORKDIR ${BASE_PATH}
-COPY docker_start.sh ./docker_start.sh
-CMD ./docker_start.sh
+COPY start_server.sh ./start_server.sh
+CMD ./start_server.sh

@@ -3,5 +3,8 @@ node_modules/
 .idea/
 *.code-workspace
 *.log
+build/
 dist/
+venv/
+*.egg-info/
 .DS_Store
