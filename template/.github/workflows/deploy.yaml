@@ -15,13 +15,17 @@ jobs:
       uses: actions/setup-node@v4
 
     - name: Install NodeJS dependencies
-      run: npm ci
+      run: |
+        cd experiment
+        npm ci
 
     - name: Build NodeJS
       run: npm run build
 
     - name: Copy NodeJS to web server folder
-      run: cp -rf dist ../server/dist
+      run: |
+        cd ..
+        cp -rf experiment/dist server/dist
 
     - name: Prepare SSH dir
       run: |
@@ -53,7 +57,7 @@ jobs:
       run: |
         python -m venv venv
         . venv/bin/activate
-        ./venv/bin/python -m pip install -r requirements.txt
+        ./venv/bin/python -m pip install -r server/requirements.txt
 
     - name: Start web server
       run: |
