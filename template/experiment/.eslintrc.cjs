@@ -27,6 +27,7 @@ module.exports = {
 			"warn",
 			{ "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
 		],
+		"no-redeclare": ["warn"],
 		"key-spacing": ["error", { "afterColon": true }],
 		"@stylistic/js/indent": ["error", "tab"]
 	},

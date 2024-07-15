@@ -54,6 +54,10 @@ def test_requirements(copie, theorist, experimentalist, firebase, p_type):
         }
     )
 
+    assert result.exit_code == 0
+    assert result.exception is None
+    assert result.project_dir.is_dir()
+
     assert (
         result.project_dir / "experiment" / "research_hub" / "requirements.txt"
     ).is_file()
