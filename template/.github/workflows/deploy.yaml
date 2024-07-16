@@ -1,4 +1,4 @@
-name: Build and Deploy to Cloud
+name: Build and Deploy to Cloud Metal
 
 on:
   workflow_dispatch:
@@ -14,24 +14,32 @@ jobs:
     - name: Install NodeJS
       uses: actions/setup-node@v4
 
-    - name: Install NodeJS dependencies
+    - name: Install Javascript dependencies and build
       run: |
+        pwd
         cd experiment
+        pwd
         npm ci
 
-    - name: Build NodeJS
-      run: npm run build
-
-    - name: Copy NodeJS to web server folder
+    - name: Build Javascript UI
       run: |
+        pwd
+        cd experiment
+        pwd
+        npm run build
+
+    - name: Copy Minified Javascript to web server directory
+      run: |
+        pwd
         cd ..
+        pwd
         cp -rf experiment/dist server/dist
 
     - name: Prepare SSH dir
       run: |
         mkdir -pv ~/.ssh/
 
-    - name: Write key
+    - name: Write SSH key
       env:
         KEY: ${{ secrets.KEY }}
       run: |
@@ -53,12 +61,12 @@ jobs:
             ServerAliveInterval=60
         END
 
-    - name: Build Python web server
+    - name: Build Python FastAPI web server
       run: |
         python -m venv venv
         . venv/bin/activate
         ./venv/bin/python -m pip install -r server/requirements.txt
 
-    - name: Start web server
+    - name: Start FastAPI web server
       run: |
         ./start_server.sh
