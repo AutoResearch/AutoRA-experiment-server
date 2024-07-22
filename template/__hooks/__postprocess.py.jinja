@@ -159,27 +159,30 @@ def write_additional_requirements():
         pathlib.Path.cwd() / "experiment" / "research_hub" / "requirements.txt"
     )
 
+    if "{{ theorists }}" == "None":
+        return
+
     if requirements_file.is_file():
         # Copier populates {{ theorists }} and {{ experimentalists }} as either a string of a list of choices if multiple are chosen
         # (for example "['autora[theorist-darts]' , 'autora[theorist-bms]']") or a string of just the chosen option (for example "autora[theorist-darts]")
         # the operations below convert everything to a string literal of a list of chosen options
         # (for example "autora[theorist-darts]" would become "['autora[theorist-darts]']")
 
-        stripped_theorist_list = "{{ theorists }}".strip("[']")
-        theorist_list_str = "['" + stripped_theorist_list + "]']"
-        stripped_exp_list = "{{ experimentalists }}".strip("[']")
-        exp_list_str = "['" + stripped_exp_list + "]']"
-
-        theorist_list = ast.literal_eval(theorist_list_str)
-        experimentalist_list = ast.literal_eval(exp_list_str)
-
-        with open(requirements_file, "a") as f:
-            if theorist_list != ["None"]:
+        if "{{ theorists }}" != "None":
+            stripped_theorist_list = "{{ theorists }}".strip("[']")
+            theorist_list_str = "['" + stripped_theorist_list + "]']"
+            theorist_list = ast.literal_eval(theorist_list_str)
+            with open(requirements_file, "a") as f:
                 for theorist in theorist_list:
                     f.write(theorist + "\n")
 
-            if experimentalist_list != ["None"]:
-                for experimentalist in experimentalist_list:
+        if "{{ experimentalists }}" != "None":
+            stripped_exp_list = "{{ experimentalists }}".strip("[']")
+            exp_list_str = "['" + stripped_exp_list + "]']"
+
+            experimentalist_list = ast.literal_eval(exp_list_str)
+            for experimentalist in experimentalist_list:
+                with open(requirements_file, "a") as f:
                     f.write(experimentalist + "\n")
 
 
