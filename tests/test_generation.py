@@ -1,6 +1,5 @@
 import pytest
 import subprocess
-import sys
 
 theorists = [
     "None",
