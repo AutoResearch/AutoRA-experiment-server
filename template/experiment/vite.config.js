@@ -8,7 +8,8 @@ export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	return {
 		build: {
-			outDir: 'dist'
+			outDir: 'dist',
+			target: 'esnext'
 		},
 		define: {
 			'process.env': env

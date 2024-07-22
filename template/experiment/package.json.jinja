@@ -16,17 +16,17 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
-    "@jspsych/plugin-browser-check": "^1.0.3",
-    "{% if project_type == 'HTML Button' %}@jspsych/plugin-html-button-response{% endif %}": "{% if project_type == 'HTML Button' %}^1.0.3{% endif %}",
-    "{% if project_type == 'Reaction Time' %}@jspsych/plugin-serial-reaction-time{% endif %}": "{% if project_type == 'Reaction Time' %}^1.0.3{% endif %}",
-    "{% if project_type == 'Multi Choice Survey' %}@jspsych/plugin-survey-multi-choice{% endif %}": "{% if project_type == 'Multi Choice Survey' %}^1.0.3{% endif %}",
-    "{% if project_type == 'Multi Select Survey' %}@jspsych/plugin-survey-multi-select{% endif %}": "{% if project_type == 'Multi Select Survey' %}^1.0.3{% endif %}",
-    "{% if project_type == 'Canvas Slider Response' %}@jspsych/plugin-canvas-slider-response{% endif %}": "{% if project_type == 'Canvas Slider Response' %}^1.0.3{% endif %}",
-    "{% if project_type in ['JsPsych - RDK', 'Basic']%}@jspsych-contrib/plugin-rdk{% endif %}": "{% if project_type in ['JsPsych - RDK', 'Basic'] %}^1.0.3{% endif %}",
-    "{% if project_type == 'SuperExperiment' %}super-experiment{% endif %}": "{% if project_type == 'SuperExperiment' %}*{% endif %}",
-    "{% if project_type == 'Save trial parameters' %}@jspsych/plugin-canvas-keyboard-response{% endif %}": "{% if project_type == 'Save trial parameters' %}^1.0.3{% endif %}",
-    "{% if project_type in ['Save trial parameters', 'Lexical decision', 'Pause/Unpause', 'SweetBean', 'JsPsych - Stroop', 'JsPsych - RDK', 'Basic'] %}@jspsych/plugin-html-keyboard-response{% endif %}": "{% if project_type in ['Save trial parameters', 'Lexical decision', 'Pause/Unpause', 'SweetBean', 'JsPsych - Stroop', 'JsPsych - RDK', 'Basic'] %}^1.0.3{% endif %}",
-    "{% if project_type in ['Save trial parameters', 'Lexical decision', 'HTML Button'] %}@jspsych/plugin-html-button-response{% endif %}": "{% if project_type in ['Save trial parameters', 'Lexical decision', 'HTML Button'] %}^1.0.3{% endif %}",
+    {% if project_type == 'Reaction Time'%}"@jspsych/plugin-serial-reaction-time": "*",{% endif %}
+    {% if project_type in ['HTML Button', 'Save trial parameters', 'Lexical decision']%}"@jspsych/plugin-html-button-response": "*",{% endif %}
+    {% if project_type == 'Reaction Time'%}"@jspsych/plugin-serial-reaction-time": "*",{% endif %}
+    {% if project_type == 'Multi Choice Survey'%}"@jspsych/plugin-survey-multi-choice": "*",{% endif %}
+    {% if project_type == 'Multi Select Survey'%}"@jspsych/plugin-survey-multi-select": "*",{% endif %}
+    {% if project_type in ['Save trial parameters', 'Pause/Unpause', 'Lexical decision', 'Basic', 'JsPsych - RDK', 'JsPsych - Stroop', 'SweetBean'] %}"@jspsych/plugin-html-keyboard-response": "*",{% endif %}
+    {% if project_type == 'Save trial parameters'%}"@jspsych/plugin-canvas-keyboard-response": "*",{% endif %}
+    {% if project_type == 'Canvas Slider Response'%}"@jspsych/plugin-canvas-slider-response": "*",{% endif %}
+    {% if project_type in ['Basic', 'JsPsych - RDK']%}"@jspsych-contrib/plugin-rdk": "*",{% endif %}
+    {% if project_type in ['Blank']%}"@jspsych/plugin-browser-check": "*",{% endif %}
+    {% if project_type == 'SuperExperiment' %}"super-experiment": "*",{% endif %}
     "axios": "^1.7.2",
     "jspsych": "^7.3.4"
   }

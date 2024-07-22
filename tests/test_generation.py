@@ -1,4 +1,5 @@
 import pytest
+import subprocess
 
 theorists = [
     "None",
@@ -64,6 +65,15 @@ def test_requirements(copie, theorist, experimentalist, firebase, proj_type):
     assert result.exit_code == 0
     assert result.exception is None
     assert result.project_dir.is_dir()
+
+    res = subprocess.run(
+        "npm run build",
+        shell=True,
+        check=False,
+        cwd=(result.project_dir / "experiment"),
+    )
+
+    assert res.returncode == 0
 
     assert (
         result.project_dir / "experiment" / "research_hub" / "requirements.txt"
