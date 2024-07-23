@@ -159,9 +159,6 @@ def write_additional_requirements():
         pathlib.Path.cwd() / "experiment" / "research_hub" / "requirements.txt"
     )
 
-    if "{{ theorists }}" == "None":
-        return
-
     if requirements_file.is_file():
         # Copier populates {{ theorists }} and {{ experimentalists }} as either a string of a list of choices if multiple are chosen
         # (for example "['autora[theorist-darts]' , 'autora[theorist-bms]']") or a string of just the chosen option (for example "autora[theorist-darts]")
