@@ -28,8 +28,9 @@ module.exports = {
 			{ "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
 		],
 		"no-redeclare": ["warn"],
+		"no-mixed-spaces-and-tabs": 0, // disable rule
 		"key-spacing": ["error", { "afterColon": true }],
-		"@stylistic/js/indent": ["error", "tab"]
+		"@stylistic/js/indent": ["error", "tab"],
 	},
 	"plugins": ["@stylistic/js"]
 }
