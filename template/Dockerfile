@@ -37,7 +37,7 @@ RUN python3 -m venv venv
 RUN . venv/bin/activate
 # install Python dependencies into virtual environment
 RUN ./venv/bin/python -m pip install -r ${BASE_PATH}/server/requirements.txt
-ENV PATH=${BASE_PATH}
+ENV PATH=${BASE_PATH}/server
 RUN unset VIRTUAL_ENV
 
 # expose web port
