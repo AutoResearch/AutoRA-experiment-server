@@ -1,18 +1,18 @@
 // TODO: remove unused imports once firebase dependency is removed
 
-import { waitPage, endPage, errorPage } from "./pages";
+// import { waitPage, endPage, errorPage } from "./pages";
 // import { getCondition, setObservation, setBackup } from "autora-firebase-functions";
 import main from "./main"
 // import db from "./firebase"
 
 const index = async () => {
-    if (process.env.NODE_ENV === 'development' && process.env.NODE_APP_devNoDb === 'True') {
-        await main(0, 0)
-        return
-    }
+    // if (process.env.NODE_ENV === 'development' && process.env.NODE_APP_devNoDb === 'True') {
+    await main(0, 0)
+    return
+    // }
 
-    //TODO: rewrite without firebase dependency
-    let prolificId = null
+// TODO: rewrite without firebase dependency
+/* let prolificId = null
     if (process.env.NODE_APP_useProlificId === 'True') {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -28,6 +28,6 @@ const index = async () => {
         endPage()
     } else {
         errorPage()
-    }
+    } */
 }
 await index()
