@@ -16,24 +16,21 @@ jobs:
 
     - name: Install Javascript dependencies and build
       run: |
-        pwd
         cd experiment
-        pwd
         npm ci
 
     - name: Build Javascript UI
       run: |
-        pwd
         cd experiment
-        pwd
         npm run build
 
     - name: Copy Minified Javascript to web server directory
       run: |
-        pwd
+        cd experiment
         cd ..
-        pwd
         cp -rf experiment/dist server/dist
+        ls server
+        ls server/dist
 
     - name: Prepare SSH dir
       run: |
@@ -52,7 +49,7 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
       run: |
         cat >>~/.ssh/config <<END
-        Host ec2
+        Host webserver
             HostName $HOST
             User $USERNAME
             IdentityFile ~/.ssh/actions.key
@@ -61,12 +58,39 @@ jobs:
             ServerAliveInterval=60
         END
 
-    - name: Build Python FastAPI web server
+    - name: Zip web application
       run: |
-        python -m venv venv
-        . venv/bin/activate
-        ./venv/bin/python -m pip install -r server/requirements.txt
+        pwd
+        zip -r app.zip server start_server.sh
+        ls
+
+    - name: Copy zip file to server
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        scp app.zip webserver:/home/$USERNAME
+
+    - name: Ensure unzip available
+      run: | 
+        ssh webserver 'sudo apt install -y unzip'
+
+    - name: Create target directory
+      run: |
+        ssh webserver 'mkdir -p /srv'
+        ssh webserver 'sudo chown ubuntu:ubuntu /srv'
+
+    - name: Unpack zip to target directory on server
+      run: |
+        ssh webserver 'unzip -o app.zip -d /srv'
+
+    - name: Install Python dependencies
+      run: |
+        ssh webserver 'sudo apt-get -y install python3 python3-pip python3-venv'
+        ssh webserver 'cd /srv && python3 -m venv venv'
+        ssh webserver 'cd /srv && source venv/bin/activate'
+        ssh webserver 'cd /srv && ./venv/bin/python -m pip install -r /srv/server/requirements.txt'
 
     - name: Start FastAPI web server
       run: |
-        ./start_server.sh
+        ssh webserver 'chmod +x /srv/start_server.sh && cd /srv && ./start_server.sh'
