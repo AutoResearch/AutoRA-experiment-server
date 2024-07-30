@@ -1,0 +1,86 @@
+name: Build and Deploy to Cloud with Docker
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker
+      uses: crazy-max/ghaction-setup-docker@v3 
+
+    - name: Build Docker image
+      env: 
+        HOST: ${{ secrets.HOST }}
+      run: | 
+        docker build --build-arg public_ip=$HOST -t autora-web-server:latest .
+
+    - name: Save Docker image as tarball
+      run: |
+        docker save autora-web-server:latest | gzip > image.tar.gz
+
+    - name: Prepare SSH dir
+      run: |
+        mkdir -pv ~/.ssh/
+
+    - name: Write SSH key
+      env:
+        KEY: ${{ secrets.KEY }}
+      run: |
+        echo "$KEY" > ~/.ssh/actions.key
+        chmod 600 ~/.ssh/actions.key
+
+    - name: Write SSH config
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        cat >>~/.ssh/config <<END
+        Host webserver
+            HostName $HOST
+            User $USERNAME
+            IdentityFile ~/.ssh/actions.key
+            StrictHostKeyChecking=no
+            ServerAliveCountMax=10
+            ServerAliveInterval=60
+        END
+
+    - name: Copy Docker image to server
+      env:
+        EC2_USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        scp image.tar.gz webserver:/home/$USERNAME
+
+    - name: Ensure Docker is installed and running
+      run: |
+        ssh webserver 'sudo apt install docker'
+        ssh webserver 'sudo systemctl start docker'   
+       
+    - name: Stop running container
+      run: | 
+        ssh webserver 'sudo docker ps -q | xargs --no-run-if-empty docker stop | xargs --no-run-if-empty docker rm'
+
+    - name: Configure Docker & load image
+      env:
+        EC2_USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        ssh webserver "sudo docker load -i /home/$USERNAME/image.tar.gz"
+
+    - name: Delete gzipped image tarball
+      env:
+        EC2_USERNAME: ${{ secrets.USERNAME }}
+      run: |
+        ssh webserver "rm -f /home/$USERNAME/image.tar.gz"
+
+    - name: Run Docker container on EC2 instance
+      run: |
+        ssh webserver "sudo docker run -p 80:80 -d autora-web-server:latest"
+
+    - name: Cleanup Docker detritus
+      run: |
+        ssh webserver "sudo docker system prune -f"
