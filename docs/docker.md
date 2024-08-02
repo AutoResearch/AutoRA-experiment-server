@@ -1,8 +1,8 @@
 # Using Docker with Your Project
 
-## 1. Install Docker Desktop
-
 If you already have Docker installed, skip ahead to [the usage instructions](#2-using-the-dockerfile).
+
+## 1. Install Docker Desktop
 
 ### For Windows
 - Go to the [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/) page.
