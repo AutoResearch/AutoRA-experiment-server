@@ -1,12 +1,10 @@
 # Using Python Copier
 
-## Installing Copier
-
-### 1. Install Python
+## 1. Install Python
 
 First, ensure you have Python installed on your system so that you can use `pip`, Python's package installer, in the instructions that follow. You can download Python from the official website: [python.org](https://www.python.org/).
 
-### 2. Install Copier
+## 2. Install Copier
 
 On **Windows**, open Command Prompt (search for `cmd` in the Start menu).
 
@@ -20,7 +18,7 @@ Run the following command to install Copier using pip:
    pip install copier
    ```
 
-### 3. Invoke Copier with the GitHub Repo
+## 3. Invoke Copier with the GitHub Repo
 
 Navigate into the directory where you want to create your new web experiment project and run the following command:
 
@@ -32,19 +30,18 @@ Note: The dot (.) means "here in this folder". You can also replace the dot with
 
 Follow the [prompts](docs%questionnaire.md). Copier will generate the web experiment files based on our GitHub template.
 
-### 4. Committing the Resulting Code to GitHub (optional but recommended)
+## 4. Committing the Resulting Code to GitHub (optional but recommended)
 
 There are advantages to committing what Copier produces to a code repository. What follows is instructions for creating a repository from the directory that Copier produces. A GitHub account is required to proceed with either of the two options. The GitHub CLI is a separate software tool but it facilitates [creating a repository from your local machine](#with-the-github-command-line-interface-cli). [Without the CLI](#without-the-github-cli) the repository will have to be created at https://github.com/.
 
-#### Using the GitHub Command-Line Interface (CLI)
-
-- On **Windows** download and run the installer from the [GitHub CLI releases page](https://github.com/cli/cli/releases).
-
-- On **MacOS** install using [Homebrew](https://brew.sh/):
-      ```bash
-      brew install gh
-      ```
-- On **Linux** Follow the installation instructions for your specific distribution from [cli.github.com](https://cli.github.com/).
+### Using the GitHub Command-Line Interface (CLI)
+- Install the GitHub CLI:
+  - On **Windows** download and run the installer from the [GitHub CLI releases page](https://github.com/cli/cli/releases).
+  - On **MacOS** install using [Homebrew](https://brew.sh/):
+        ```bash
+        brew install gh
+        ```
+  - On **Linux** Follow the installation instructions for your specific distribution from [cli.github.com](https://cli.github.com/).
     
 - Open a terminal.
 
@@ -81,7 +78,7 @@ There are advantages to committing what Copier produces to a code repository. Wh
       git push -u origin HEAD
       ```
 
-#### Without the GitHub CLI
+### Without the GitHub CLI
 
 Create the repository in GitHub following [their instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository). 
 
