@@ -1,5 +1,7 @@
 # Detailed Walkthrough of the Generated Dockerfile
 
+The `Dockerfile` comprises instructions to build an image that can be used to spin up a Docker container locally and/or on a server.
+
 ```Dockerfile
 syntax=docker/dockerfile:1
 ```
