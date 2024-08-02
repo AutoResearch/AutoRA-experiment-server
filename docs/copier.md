@@ -23,7 +23,7 @@ Run the following command to install Copier using pip:
 Navigate into the directory where you want to create your new web experiment project and run the following command:
 
    ```sh
-   copier github.com:gt-sse-center/AutoRA-experiment-server .
+   copier copy github.com:gt-sse-center/AutoRA-experiment-server .
    ```
    
 Note: The dot (.) means "here in this folder". You can also replace the dot with a path to an existing folder, or the name you would like the new directory to have and it will be created.
