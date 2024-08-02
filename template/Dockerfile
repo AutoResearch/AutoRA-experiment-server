@@ -43,7 +43,7 @@ RUN unset VIRTUAL_ENV
 # expose web port
 EXPOSE 80
 
-# start web and gRPC servers
+# start web server
 WORKDIR ${BASE_PATH}
 COPY start_docker_server.sh ./server/start_docker_server.sh
 WORKDIR ${BASE_PATH}/server
