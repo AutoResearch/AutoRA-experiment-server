@@ -80,14 +80,14 @@ There are advantages to committing what Copier produces to a code repository. Wh
 
 ### Without the GitHub CLI
 
-Create the repository in GitHub following [their instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository). 
+- Create the repository in GitHub following [their instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository). 
 
-Take note of the URL of your new repository. It should look something like this: `https://github.com/yourusername/your-repo-name`
-```sh
-git init
-git add .
-git commit -m "Initial commit"
-# in the next command ".git" is appended to the repository URL you noted above
-git remote add origin https://github.com/yourusername/your-repo-name.git
-git push -u origin main
-```
+- Take note of the URL of your new repository. It should look something like this: `https://github.com/yourusername/your-repo-name`
+   ```sh
+   git init
+   git add .
+   git commit -m "Initial commit"
+   # in the next command ".git" is appended to the repository URL you noted above
+   git remote add origin https://github.com/yourusername/your-repo-name.git
+   git push -u origin main
+   ```
