@@ -1,4 +1,4 @@
-# Provided GitHub Actions for CI/CD
+# Provided CI/CD GitHub Actions Workflows
 
 The deployment process consists of two GitHub Actions. 
 
