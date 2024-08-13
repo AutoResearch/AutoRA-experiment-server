@@ -18,7 +18,6 @@
   "dependencies": {
     {% if project_type == 'Reaction Time'%}"@jspsych/plugin-serial-reaction-time": "*",{% endif %}
     {% if project_type in ['HTML Button', 'Save trial parameters', 'Lexical decision']%}"@jspsych/plugin-html-button-response": "*",{% endif %}
-    {% if project_type == 'Reaction Time'%}"@jspsych/plugin-serial-reaction-time": "*",{% endif %}
     {% if project_type == 'Multi Choice Survey'%}"@jspsych/plugin-survey-multi-choice": "*",{% endif %}
     {% if project_type == 'Multi Select Survey'%}"@jspsych/plugin-survey-multi-select": "*",{% endif %}
     {% if project_type in ['Save trial parameters', 'Pause/Unpause', 'Lexical decision', 'Basic', 'JsPsych - RDK', 'JsPsych - Stroop', 'SweetBean'] %}"@jspsych/plugin-html-keyboard-response": "*",{% endif %}
