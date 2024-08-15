@@ -1,6 +1,7 @@
 import { initJsPsych } from "jspsych";
 import jsPsychBrowserCheck from '@jspsych/plugin-browser-check';
 import "./style.css";
+import axios from 'axios';
 
 const main = async (id, condition) => {
 	// in case the user refreshes the page or closes the browser

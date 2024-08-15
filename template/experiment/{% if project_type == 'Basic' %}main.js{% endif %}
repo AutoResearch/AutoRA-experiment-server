@@ -8,6 +8,7 @@ import {initJsPsych} from 'jspsych';
 import 'jspsych/css/jspsych.css'
 import jsPsychRdk from '@jspsych-contrib/plugin-rdk';
 import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
+import axios from 'axios';
 
 /**
  * This is the main function where you program your experiment. Install jsPsych via node and
