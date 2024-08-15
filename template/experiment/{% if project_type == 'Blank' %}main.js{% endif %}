@@ -21,8 +21,16 @@ const main = async (id, condition) => {
 	// initialize jspsych
 	var jsPsych = initJsPsych({
 		on_finish: function() {
-			jsPsych.data.displayData();
-		}
+			if (process.env.NODE_APP_devNoDb !== 'True') {
+				const observation = [id, jsPsych.data.get().json()];
+				axios.post("/data", observation)
+					.then((response) => {
+						if (response.status != 200) {
+							console.warn(response.data.error);
+						}
+					})
+			}
+		},
 	});
 
 	// start timeline

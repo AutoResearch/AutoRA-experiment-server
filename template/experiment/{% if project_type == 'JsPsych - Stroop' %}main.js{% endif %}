@@ -16,7 +16,19 @@ import htmlKeyboardResponse from '@jspsych/plugin-html-keyboard-response';
  * @returns {Promise<*>} the accuracy in the post-trainging phase relative to the pre-training phase
  */
 const main = async (id, condition) => {
-    const jsPsych = initJsPsych()
+    var jsPsych = initJsPsych({
+		on_finish: function() {
+			if (process.env.NODE_APP_devNoDb !== 'True') {
+				const observation = [id, jsPsych.data.get().json()];
+				axios.post("/data", observation)
+					.then((response) => {
+						if (response.status != 200) {
+							console.warn(response.data.error);
+						}
+					})
+			}
+		},
+	});
 
     // constants
     const FIXATION_DURATION = 800
