@@ -1,9 +1,8 @@
 from pathlib import Path
-from urllib.request import Request
 
 import logger
 import json
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 
@@ -35,10 +34,13 @@ def serve_frontend() -> FileResponse:
 
 
 @app.post("/data")
-def receive_data(data):
-    # project_path = Path(__file__).parent.resolve()
+async def receive_data(request: Request):
+    project_parent_path = Path(__file__).parent.resolve()
+    input = await request.json()
 
-    # with open(project_path / "autora_out.json", "w") as f:
-    #     json.dump(data, f)
+    id, data = input[0], input[1]
+
+    with open(project_parent_path / "../autora_out.json", "w") as f:
+        json.dump({id: data}, f)
 
     return data
