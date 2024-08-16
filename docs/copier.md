@@ -23,10 +23,12 @@ Run the following command to install Copier using pip:
 Navigate into the directory where you want to create your new web experiment project and run the following command:
 
    ```sh
-   copier copy github.com:gt-sse-center/AutoRA-experiment-server .
+   copier copy github.com:gt-sse-center/AutoRA-experiment-server . --trust
    ```
    
 Note: The dot (.) means "here in this folder". You can also replace the dot with a path to an existing folder, or the name you would like the new directory to have and it will be created.
+
+This command must be run with the `--trust` flag. The `--trust` flag is required because certain features, in this case, executing post generation tasks, can pose security risks if the template contains unsafe or malicious code. By using the `--trust` flag, you’re explicitly confirming that you trust the source of the template and allow Copier to run potentially unsafe operations safely.
 
 Follow the [prompts](docs%questionnaire.md). Copier will generate the web experiment files based on our GitHub template.
 
