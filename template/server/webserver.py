@@ -35,12 +35,24 @@ def serve_frontend() -> FileResponse:
 
 @app.post("/data")
 async def receive_data(request: Request):
+    """Receive trial results and write to autora_out.json
+
+    Args:
+        request (Request): incoming array of [id, trial_result]
+
+    Returns:
+        data: trial result
+    """
     project_parent_path = Path(__file__).parent.resolve()
     input = await request.json()
 
     id, data = input[0], input[1]
 
-    with open(project_parent_path / "../autora_out.json", "w") as f:
+    # TODO: ensure file path exists
+    # TODO: change to append
+    with open(
+        project_parent_path / "../experiment/autora_out/autora_out.json", "w"
+    ) as f:
         json.dump({id: data}, f)
 
     return data

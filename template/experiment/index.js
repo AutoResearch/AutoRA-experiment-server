@@ -1,7 +1,5 @@
-// TODO: remove unused imports once firebase dependency is removed
-
-import { waitPage, endPage, errorPage } from "./pages";
-import { getCondition, setObservation } from "./autora-filestore-functions"
+import { errorPage } from "./pages";
+import { getCondition } from "./autora-filestore-functions"
 import main from "./main"
 
 
@@ -17,11 +15,10 @@ const index = async () => {
         prolificId = urlParams.get('PROLIFIC_PID');
     }
 
-    let prolificId = "1"
+    let prolificId = "1" // TODO: replace with pID
     let condition = await getCondition('autora', prolificId)
     if (condition && (prolificId !== null || process.env.NODE_APP_useProlificId === 'False')) {
         await main(condition[0], condition[1])
-
     } else {
         errorPage()
     }
