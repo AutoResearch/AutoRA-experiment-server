@@ -109,6 +109,11 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
     # Extract js code from between final script tags
     script_tag_onwards = response_text.split("<script>")[-1]
     js_script = textwrap.dedent(script_tag_onwards.split("</script>")[0]).strip() + "\n"
+    js_script = (
+        js_script.split("jsPsych.run(")[0]
+        + "await jsPsych.run("
+        + js_script.split("jsPsych.run(")[1]
+    )
     js_script = textwrap.indent(js_script, "  ")
 
     # Get dependencies
@@ -123,7 +128,6 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
         import_dep_text += f"import {dep}\n"
 
         dep_package_name = dep.split("from ")[1]
-        print(dep_package_name)
         comment_text += f"// This example uses the {dep_package_name[17:-1]} plugin. Install it via `npm install {dep_package_name[1:-1]}`\n"
 
     # Build output file
@@ -135,12 +139,28 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
 
         import {initJsPsych} from 'jspsych';
         import 'jspsych/css/jspsych.css'
+        import axios from "axios";
     """
     )
 
     output_file_text += import_dep_text
-    output_file_text += "\nconst main = async (id, condition) => {\n"
+    output_file_text += "\nconst main = async (id, condition) => {\n\t"
     output_file_text += js_script
+
+    jsPsych_init_onfinish_function = """if (process.env.NODE_APP_devNoDb !== 'True') {
+                    const observation = [id, jsPsych.data.get().json()];
+                    axios.post("/data", observation)
+                        .then((response) => {
+                            if (response.status != 200) {
+                                console.warn(response.data.error);
+                            }
+                        })
+                }"""
+
+    output_file_text = output_file_text.replace(
+        "jsPsych.data.displayData();", jsPsych_init_onfinish_function
+    )
+
     output_file_text += "} \n\nexport default main\n"
 
     # Write to file
