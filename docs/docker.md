@@ -120,9 +120,9 @@ If you already have Docker installed, skip ahead to [the usage instructions](#2-
 - Open Terminal and navigate to the directory containing the `Dockerfile` using the `cd` command.
 - Build the Docker image with the following command (feel free to choose your own name instead of "your_image_name"):
   ```sh
-  sudo docker build -t your_image_name .
+  docker build -t your_image_name .
   ```
 - Run a container from the image:
   ```sh
-  sudo docker run -d -p 80:80 your_image_name
+  docker run -d -p 80:80 your_image_name
   ```
