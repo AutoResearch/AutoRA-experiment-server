@@ -43,16 +43,17 @@ async def receive_data(request: Request):
     Returns:
         data: trial result
     """
-    project_parent_path = Path(__file__).parent.resolve()
     input = await request.json()
-
     id, data = input[0], input[1]
+    project_path = Path(__file__).parent.resolve().parent.resolve()
+    out_file_location = project_path / "experiment" / "autora_out" / "autora_out.json"
 
-    # TODO: ensure file path exists
-    # TODO: change to append
-    with open(
-        project_parent_path / "../experiment/autora_out/autora_out.json", "w"
-    ) as f:
-        json.dump({id: data}, f)
+    if out_file_location.exists():
+        with open(out_file_location, "r") as f:
+            existing_data = json.load(f)
+            existing_data[id] = data
+
+        with open(out_file_location, "w") as f:
+            json.dump(existing_data, f)
 
     return data
