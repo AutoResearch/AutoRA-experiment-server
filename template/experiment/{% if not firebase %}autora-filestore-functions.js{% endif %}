@@ -12,8 +12,11 @@ const getCondition = async (study, pId = null) => {
             return return_arr
         }
     }
+
     return false;
 }
+
+
 
 
 export { getCondition }
