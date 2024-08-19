@@ -26,6 +26,7 @@
     {% if project_type in ['Basic', 'JsPsych - RDK']%}"@jspsych-contrib/plugin-rdk": "*",{% endif %}
     {% if project_type in ['Blank']%}"@jspsych/plugin-browser-check": "*",{% endif %}
     {% if project_type == 'SuperExperiment' %}"super-experiment": "*",{% endif %}
+    {% if firebase %}"autora-firebase-functions": "*",{% endif %}
     "axios": "^1.7.4",
     "jspsych": "^7.3.4"
   }

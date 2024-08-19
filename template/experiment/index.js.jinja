@@ -1,6 +1,12 @@
 import { errorPage } from "./pages";
-import { getCondition } from "./autora-filestore-functions"
 import main from "./main"
+{% if firebase %}
+import { getCondition, setObservation, setBackup } from "autora-firebase-functions";
+import db from "./firebase"
+import { waitPage, endPage } from "./pages";
+{% else %}
+import { getCondition } from "./autora-filestore-functions"
+{% endif %}
 
 
 const index = async () => {
@@ -18,7 +24,15 @@ const index = async () => {
     let prolificId = "1" // TODO: replace with pID
     let condition = await getCondition('autora', prolificId)
     if (condition && (prolificId !== null || process.env.NODE_APP_useProlificId === 'False')) {
+        {% if firebase %}
+        let observation = await main(condition[0], condition[1])
+        waitPage()
+        await setObservation(db, 'autora', condition[0], observation)
+        await setBackup(db, 'autora', condition[0], condition[1], observation)
+        endPage()
+        {% else %}
         await main(condition[0], condition[1])
+        {% endif %}
     } else {
         errorPage()
     }
