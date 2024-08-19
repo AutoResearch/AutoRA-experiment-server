@@ -16,7 +16,4 @@ const getCondition = async (study, pId = null) => {
     return false;
 }
 
-
-
-
 export { getCondition }
