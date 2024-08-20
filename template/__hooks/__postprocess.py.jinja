@@ -132,6 +132,19 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
 
     # Build output file
     output_file_text += textwrap.dedent(comment_text)
+
+    {% if firebase %}
+    output_file_text += textwrap.dedent(
+        """
+        // Here is documentation on how to program a jspsych experiment using npm:
+        // https://www.jspsych.org/7.3/tutorials/hello-world/#option-3-using-npm
+
+        import {initJsPsych} from 'jspsych';
+        import 'jspsych/css/jspsych.css'
+        import {endPage} from "./pages";
+    """
+    )
+    {% else %}
     output_file_text += textwrap.dedent(
         """
         // Here is documentation on how to program a jspsych experiment using npm:
@@ -140,13 +153,20 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
         import {initJsPsych} from 'jspsych';
         import 'jspsych/css/jspsych.css'
         import axios from "axios";
+        import {endPage} from "./pages";
     """
     )
+    {% endif%}
 
     output_file_text += import_dep_text
     output_file_text += "\nconst main = async (id, condition) => {\n\t"
     output_file_text += js_script
 
+    jsPsych_init_onfinish_function = "endPage()"
+
+    {% if firebase %}
+    jsPsych_init_onfinish_function = "endPage()"
+    {% else %}
     jsPsych_init_onfinish_function = """if (process.env.NODE_APP_devNoDb !== 'True') {
                     const observation = [id, jsPsych.data.get().json()];
                     axios.post("/data", observation)
@@ -155,7 +175,9 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
                                 console.warn(response.data.error);
                             }
                         })
+                    endPage()
                 }"""
+    {% endif %}
 
     output_file_text = output_file_text.replace(
         "jsPsych.data.displayData();", jsPsych_init_onfinish_function
