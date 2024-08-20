@@ -1,4 +1,7 @@
 #!/bin/bash
+# This script is used by the GitHub Actions yaml file found in ./.github/workflows/deploy_w_docker.yaml
+# It is not meant to be used outside of GitHub Actions
+# To launch the web app locally, please use start.sh
 
 # Start the web server
 cd /srv/server

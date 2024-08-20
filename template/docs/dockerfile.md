@@ -121,7 +121,7 @@ If you are serving a web application from a Docker container you must expose a p
 
 ```Dockerfile
 WORKDIR ${BASE_PATH}
-COPY start_docker_server.sh ./server/start_docker_server.sh
+COPY _start_docker_server.sh ./server/start_docker_server.sh
 ```
 We have a bash script that starts up the application and we are copying it into the container here.
 
