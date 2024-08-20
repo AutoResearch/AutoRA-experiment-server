@@ -45,6 +45,6 @@ EXPOSE 80
 
 # start web server
 WORKDIR ${BASE_PATH}
-COPY start_docker_server.sh ./server/start_docker_server.sh
+COPY _start_docker_server.sh ./server/start_docker_server.sh
 WORKDIR ${BASE_PATH}/server
 CMD ./start_docker_server.sh
