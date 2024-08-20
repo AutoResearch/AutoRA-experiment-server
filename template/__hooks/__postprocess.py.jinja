@@ -162,8 +162,6 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
     output_file_text += "\nconst main = async (id, condition) => {\n\t"
     output_file_text += js_script
 
-    jsPsych_init_onfinish_function = "endPage()"
-
     {% if firebase %}
     jsPsych_init_onfinish_function = "endPage()"
     {% else %}
