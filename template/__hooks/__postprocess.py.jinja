@@ -196,7 +196,7 @@ def write_additional_requirements():
     """
 
     requirements_file = (
-        pathlib.Path.cwd() / "experiment" / "research_hub" / "requirements.txt"
+        pathlib.Path.cwd() / "experiment-server" / "research_hub" / "requirements.txt"
     )
 
     if requirements_file.is_file():
@@ -223,5 +223,5 @@ def write_additional_requirements():
                     f.write(experimentalist + "\n")
 
 
-write_to_js(__example_names["{{ project_type }}"], f"experiment/main.js")
+write_to_js(__example_names["{{ project_type }}"], f"experiment-ui/main.js")
 write_additional_requirements()

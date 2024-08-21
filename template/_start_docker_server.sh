@@ -4,7 +4,7 @@
 # To launch the web app locally, please use start.sh
 
 # Start the web server
-cd /srv/server
+cd /srv/experiment-server
 source venv/bin/activate
 uvicorn webserver:app --host "0.0.0.0" --port 80 &
 deactivate
