@@ -44,8 +44,10 @@ project_types = [
 @pytest.mark.parametrize("experimentalist", experimentalists)
 @pytest.mark.parametrize("firebase", firebase_options)
 @pytest.mark.parametrize("proj_type", project_types)
+@pytest.mark.parametrize("docker", [False, True])
+@pytest.mark.parametrize("actions", [False, True])
 @pytest.mark.filterwarnings("ignore:Dirty template changes included automatically")
-def test_all(copie, theorist, experimentalist, firebase, proj_type):
+def test_all(copie, theorist, experimentalist, firebase, proj_type, docker, actions):
     """Tests for copier generation. Tests have been moved into subfunctions because copie is a function scoped fixture.
     This allows us to run all tests related to a generation at once instead of needing to regenerate for each test
 
@@ -63,6 +65,8 @@ def test_all(copie, theorist, experimentalist, firebase, proj_type):
             "experimentalists": experimentalist,
             "firebase": firebase,
             "project_type": proj_type,
+            "docker": docker,
+            "actions": actions,
         }
     )
 
@@ -83,7 +87,9 @@ def test_all(copie, theorist, experimentalist, firebase, proj_type):
         ).is_file()
 
         with open(
-            copier_result.project_dir / "experiment-server/research_hub/requirements.txt", "r"
+            copier_result.project_dir
+            / "experiment-server/research_hub/requirements.txt",
+            "r",
         ) as req_file:
             reqs = req_file.read()
             reqs_list = reqs.split("\n")
@@ -122,7 +128,7 @@ def test_all(copie, theorist, experimentalist, firebase, proj_type):
             "npm run build",
             shell=True,
             check=False,
-            cwd=(copier_result.project_dir / "experiment"),
+            cwd=(copier_result.project_dir / "experiment-ui"),
         )
 
         assert res.returncode == 0
