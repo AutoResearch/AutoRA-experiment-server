@@ -63,6 +63,16 @@ firebase:
   help: Would you like to set up a firebase experiment?
   default: false
 
+docker:
+  type: bool
+  help: Would you like to use docker for deployment?
+  default: True
+
+actions:
+  type: bool
+  help: Would you like to set up Github Actions for deployment?
+  default: True
+  
 _subdirectory: template
 
 _tasks:
