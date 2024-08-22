@@ -78,17 +78,17 @@ WORKDIR ${BASE_PATH}
 Now that we have attended to the frontend, we are changing back to the base path so that we can build the web server backend.
 
 ```Dockerfile
-COPY server ${BASE_PATH}/server
+COPY experiment-server ${BASE_PATH}/experiment-server
 ```
-We are copying in the Python FastAPI backend code which lives in the `server` folder.
+We are copying in the Python FastAPI backend code which lives in the `experiment-server` folder.
 
 ```Dockerfile
-RUN cp -rf experiment/dist ${BASE_PATH}/server/dist
+RUN cp -rf experiment-ui/dist ${BASE_PATH}/experiment-server/dist
 ```
 In order for FastAPI to server up HTML+JS, we need to copy the "built" Javascript app into the `server` directory, which is what we are doing with this instruction.
 
 ```Dockerfile
-WORKDIR ${BASE_PATH}/server
+WORKDIR ${BASE_PATH}/experiment-server
 ```
 We now change into the web server directory so we can install our Python dependencies and build the web application.
 
@@ -104,12 +104,12 @@ RUN . venv/bin/activate
 We activate the Python virtual environment.
 
 ```Dockerfile
-RUN ./venv/bin/python -m pip install -r ${BASE_PATH}/server/requirements.txt
+RUN ./venv/bin/python -m pip install -r ${BASE_PATH}/experiment-server/requirements.txt
 ```
 Here we install the Python dependencies from our `requirements.txt` file.
 
 ```Dockerfile
-ENV PATH=${BASE_PATH}/server
+ENV PATH=${BASE_PATH}/experiment-server
 RUN unset VIRTUAL_ENV
 ```
 We are prepending our new venv to the image `PATH`, so that the container looks for dependencies in this directory first, and then we "unset" the virtual environment so that subsequent commands are not run in the context of our virtual environment.
@@ -121,12 +121,12 @@ If you are serving a web application from a Docker container you must expose a p
 
 ```Dockerfile
 WORKDIR ${BASE_PATH}
-COPY _start_docker_server.sh ./server/start_docker_server.sh
+COPY _start_docker_server.sh ./experiment-server/_start_docker_server.sh
 ```
 We have a bash script that starts up the application and we are copying it into the container here.
 
 ```Dockerfile
 WORKDIR ${BASE_PATH}/server
-CMD ./start_docker_server.sh
+CMD ./_start_docker_server.sh
 ```
 We invoke the startup script and that should start up the FastAPI server. An `ENTRYPOINT` or `CMD` instruction always comes last in a `Dockerfile`. More on the `CMD` instruction can be found [here](https://docs.docker.com/reference/dockerfile/#cmd).

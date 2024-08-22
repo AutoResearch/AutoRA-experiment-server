@@ -68,4 +68,4 @@ _subdirectory: template
 _tasks:
   - python __hooks/__postprocess.py #dynamically create files if chosen from jspsych examples
   - rm -r __hooks
-  - cd experiment; npm install; npm run lint
+  - cd experiment-ui; npm install; npm run lint

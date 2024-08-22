@@ -77,13 +77,13 @@ def test_all(copie, theorist, experimentalist, firebase, proj_type):
 
         assert (
             copier_result.project_dir
-            / "experiment"
+            / "experiment-server"
             / "research_hub"
             / "requirements.txt"
         ).is_file()
 
         with open(
-            copier_result.project_dir / "experiment/research_hub/requirements.txt", "r"
+            copier_result.project_dir / "experiment-server/research_hub/requirements.txt", "r"
         ) as req_file:
             reqs = req_file.read()
             reqs_list = reqs.split("\n")

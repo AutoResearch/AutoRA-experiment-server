@@ -46,7 +46,7 @@ async def receive_data(request: Request):
     input = await request.json()
     id, data = input[0], input[1]
     project_path = Path(__file__).parent.resolve().parent.resolve()
-    out_file_location = project_path / "experiment" / "autora_out" / "autora_out.json"
+    out_file_location = project_path / "experiment-server" / "autora_out" / "autora_out.json"
 
     if out_file_location.exists():
         with open(out_file_location, "r") as f:
