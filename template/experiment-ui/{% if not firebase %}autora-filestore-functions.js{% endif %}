@@ -1,5 +1,5 @@
-import autora_metadata from "../experiment-server/conditions_db/autora_meta.json";
-import autora_in_data from "../experiment-server/conditions_db/autora_in.json";
+import autora_metadata from "./conditions_db/autora_meta.json";
+import autora_in_data from "./conditions_db/autora_in.json";
 
 const getCondition = async (study, pId = null) => {
     for (let key in autora_metadata[study]) {
