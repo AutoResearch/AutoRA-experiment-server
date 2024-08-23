@@ -36,7 +36,7 @@ RUN rm -rf venv
 RUN python3 -m venv venv
 RUN . venv/bin/activate
 # install Python dependencies into virtual environment
-RUN ./venv/bin/python -m pip install -r ${BASE_PATH}/experiment-server/requirements.txt
+RUN ./venv/bin/python -m pip install --no-cache-dir -r ${BASE_PATH}/experiment-server/requirements.txt
 ENV PATH=${BASE_PATH}/experiment-server
 RUN unset VIRTUAL_ENV
 

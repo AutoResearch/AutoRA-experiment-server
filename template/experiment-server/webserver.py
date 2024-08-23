@@ -2,16 +2,19 @@ from pathlib import Path
 
 import logger
 import json
+from random import SystemRandom
+from string import ascii_letters, digits
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
+from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI()
+app.add_middleware(SessionMiddleware, secret_key=''.join(SystemRandom().choice(ascii_letters + digits) for _ in range(42)))
 
 log = logger.config(True)
 
 app.mount("/experiment", StaticFiles(directory="dist"), name="frontend")
-
 
 @app.get("/")
 def default() -> RedirectResponse:
@@ -22,10 +25,14 @@ def default() -> RedirectResponse:
 
 
 @app.get("/experiment")
-def serve_frontend() -> FileResponse:
+def serve_frontend(request: Request, PROLIFIC_PID: str | None = "", STUDY_ID: str | None = "", SESSION_ID: str | None = "") -> FileResponse:
     """
     Serves static UI
     """
+    request.session["PROLIFIC_PID"] = PROLIFIC_PID
+    request.session["SESSION_ID"] = SESSION_ID
+    request.session["STUDY_ID"] = STUDY_ID
+
     project_path = Path(__file__).parent.resolve()
     response = FileResponse(
         str(project_path / "dist/index.html"), media_type="text/html"
@@ -44,14 +51,27 @@ async def receive_data(request: Request):
         data: trial result
     """
     input = await request.json()
-    id, data = input[0], input[1]
+
+    prolific_pid = request.session.get("PROLIFIC_PID")
+    prolific_session_id = request.session.get("SESSION_ID")
+    prolific_study_id = request.session.get("STUDY_ID")
+
+    id = prolific_pid if prolific_pid else input[0]
+    data = input[1]
+
     project_path = Path(__file__).parent.resolve().parent.resolve()
     out_file_location = project_path / "experiment-server" / "autora_out" / "autora_out.json"
+
+    new_data = {
+        "study_id": prolific_study_id,
+        "session_id": prolific_session_id,
+        "data": data
+    }
 
     if out_file_location.exists():
         with open(out_file_location, "r") as f:
             existing_data = json.load(f)
-            existing_data[id] = data
+            existing_data[id] = new_data
 
         with open(out_file_location, "w") as f:
             json.dump(existing_data, f)

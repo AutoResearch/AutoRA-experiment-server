@@ -1,5 +1,5 @@
 autora
 autora-core
-requests
+itsdangerous
 fastapi
 uvicorn
