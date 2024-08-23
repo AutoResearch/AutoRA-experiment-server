@@ -2,13 +2,15 @@ from pathlib import Path
 
 import logger
 import json
+from random import SystemRandom
+from string import ascii_letters, digits
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, FileResponse, RedirectResponse
 from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="W<(nwGTe8I9MX$UHftcK")
+app.add_middleware(SessionMiddleware, secret_key=''.join(SystemRandom().choice(ascii_letters + digits) for _ in range(42)))
 
 log = logger.config(True)
 
