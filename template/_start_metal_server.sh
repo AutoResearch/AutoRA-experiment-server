@@ -4,4 +4,4 @@
 # To launch the web app locally, please use start.sh
 
 source venv/bin/activate
-uvicorn webserver:app --host "0.0.0.0" --port 80 &
+nohup uvicorn webserver:app --host "0.0.0.0" --port 80 &
