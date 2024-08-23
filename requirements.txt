@@ -1,0 +1,4 @@
+copier
+pytest
+pytest-copie
+requests
