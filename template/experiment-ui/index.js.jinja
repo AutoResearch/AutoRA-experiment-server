@@ -1,4 +1,4 @@
-import { errorPage } from "./pages";
+import { errorPage, consentForm, declinePage } from "./pages";
 import main from "./main"
 {% if firebase %}
 import { getCondition, setObservation, setBackup } from "autora-firebase-functions";
@@ -10,35 +10,51 @@ import { getCondition } from "./autora-filestore-functions"
 
 
 const index = async () => {
-    if (process.env.NODE_ENV === 'development' && process.env.NODE_APP_devNoDb === 'True') {
-        await main(0, 0)
-        return
+
+    consentForm();
+
+    document.getElementById("consent").onclick = async () => {
+        if (process.env.NODE_ENV === 'development' && process.env.NODE_APP_devNoDb === 'True') {
+            await main(0, 0);
+            return;
+        }
+
+        let prolificId = "1";
+
+        if (process.env.NODE_APP_useProlificId === 'True') {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            prolificId = urlParams.get('PROLIFIC_PID');
+        }
+
+        let condition = await getCondition('autora', prolificId);
+
+        if (condition && (prolificId !== null || process.env.NODE_APP_useProlificId === 'False')) {
+            {% if firebase %}
+            let observation = await main(condition[0], condition[1]);
+
+            waitPage();
+
+            await setObservation(db, 'autora', condition[0], observation);
+            await setBackup(db, 'autora', condition[0], condition[1], observation);
+
+            endPage();
+
+            {% else %}
+
+            await main(condition[0], condition[1]);
+
+            {% endif %}
+
+        } else {
+            errorPage();
+        }
+
+        return;
     }
-
-    if (process.env.NODE_APP_useProlificId === 'True') {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        prolificId = urlParams.get('PROLIFIC_PID');
+    document.getElementById("decline").onclick = () => {
+        declinePage();
     }
-
-    let prolificId = "1" // TODO: replace with pID
-    let condition = await getCondition('autora', prolificId)
-    if (condition && (prolificId !== null || process.env.NODE_APP_useProlificId === 'False')) {
-        {% if firebase %}
-        let observation = await main(condition[0], condition[1])
-        waitPage()
-        await setObservation(db, 'autora', condition[0], observation)
-        await setBackup(db, 'autora', condition[0], condition[1], observation)
-        endPage()
-        {% else %}
-        await main(condition[0], condition[1])
-        {% endif %}
-    } else {
-        errorPage()
-    }
-
-
-    return false;
 }
 
 await index();
