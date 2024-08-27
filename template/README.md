@@ -16,7 +16,7 @@ The [autora_workflow.py](https://github.com/AutoResearch/autora-user-cookiecutte
 
 ### ViteJS + NodeJS + npm 
 
-This project uses "vanilla" Javascript, the [`ViteJS`](https://vitejs.dev/guide/static-deploy.html#building-the-app) dev build server, and [`npm`](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) for Javascript dependency management. The frontend is defined, including its dependencies, in the [`package.json`](package.json) file.
+This project uses "vanilla" Javascript, the [`ViteJS`](https://vitejs.dev/guide/static-deploy.html#building-the-app) dev build server, and [`npm`](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) for Javascript dependency management. The frontend is defined, including its dependencies, in the `package.json` file.
 
 ### jsPsych
 
