@@ -21,16 +21,16 @@ This project template helps configure and scaffold your experiment web applicati
   - JsPsych - RDK
   - SweetBean
   - SuperExperiment
-  - *HTML Button*
-  - *Reaction Time*
-  - *Multi Choice Survey*
-  - *Multi Select Survey*
-  - *Save Trial Parameters*
-  - *Lexical Decision*
-  - *Pause/Unpause*
-  - *Canvas Slider Response*
+  - *HTML Button\**
+  - *Reaction Time\**
+  - *Multi Choice Survey\**
+  - *Multi Select Survey\**
+  - *Save Trial Parameters\**
+  - *Lexical Decision\**
+  - *Pause/Unpause\**
+  - *Canvas Slider Response\**
 
-- **Note**: Experiments labeled in *italics* require internet connection as they are pulled from [JsPsych's GitHub Repo](https://github.com/jspsych/jsPsych/tree/main/examples)
+- **Note**: Experiments labeled in *italics* with an asterisk require internet connection as they are pulled from [JsPsych's GitHub Repo](https://github.com/jspsych/jsPsych/tree/main/examples)
 
 ### 3. `theorists`
 - **Type**: `multiselect`
