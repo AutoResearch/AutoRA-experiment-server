@@ -20,13 +20,11 @@ This project uses "vanilla" Javascript, the [`ViteJS`](https://vitejs.dev/guide/
 
 ### jsPsych
 
-The most critical dependency in the Javascript code is [`jsPsych`](https://www.jspsych.org/v7/) which defines the behavioral experiments. The Copier output here will initialize a `jsPsych timeline` in `main.js` based on your Copier questionnaire responses. The [jsPsych timeline documentation](https://www.jspsych.org/v7/overview/timeline/) thoroughly describes how to work with the timeline to define your trials.
+The core Javascript dependency is [`jsPsych`](https://www.jspsych.org/v7/) which is used to define the behavioral experiment(s). The Copier output will initialize a `jsPsych timeline` in `main.js` based on your Copier questionnaire responses. `main.js` contains the core logic and setup for the experiment. [jsPsych provides comprehensive timeline documentation](https://www.jspsych.org/v7/overview/timeline/) to help you define your trials.  If you wish to customize the experiment (e.g., modifying trials, adjusting settings, or adding new features) please do so by working with the `timeline` in `main.js`.
 
 ### FastAPI
 
 This project uses [`FastAPI`](https://fastapi.tiangolo.com/tutorial/) for the backend web framework and [`uvicorn`](https://www.uvicorn.org/) as a web server.
-
-The code for the JsPsych experiment is located in the main.js file. This file contains the core logic and setup for the experiment. If you wish to customize the experiment (e.g., modifying trials, adjusting settings, or adding new features), please refer to main.js as the primary entry point.
 
 For more detailed information on customizing JsPsych experiments, including documentation and examples, visit [here](https://www.jspsych.org/v7/overview/timeline/).
 
