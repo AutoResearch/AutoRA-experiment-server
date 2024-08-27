@@ -30,7 +30,7 @@ This project template helps configure and scaffold your experiment web applicati
   - *Pause/Unpause\**
   - *Canvas Slider Response\**
 
-- **Note**: Experiments labeled in *italics* with an asterisk require internet connection as they are pulled from [JsPsych's GitHub Repo](https://github.com/jspsych/jsPsych/tree/main/examples)
+- **Note**: Experiments labeled with an asterisk (\*) require internet connection as they are pulled from [JsPsych's GitHub Repo](https://github.com/jspsych/jsPsych/tree/main/examples) during the project generation
 
 ### 3. `theorists`
 - **Type**: `multiselect`
@@ -41,7 +41,7 @@ This project template helps configure and scaffold your experiment web applicati
   - autora[theorist-bms]
   - autora[theorist-bsr]
 - **Default**: `None`
-- **Description**: Choose one or more theorists to integrate with your experiment. These are optional dependencies, allowing you to add specific theorist modules to the project. 
+- **Description**: Choose one or more theorists to integrate with your experiment. These are optional dependencies, allowing you to add specific theorist modules to the project. You can read more about theorists and their role in the AutoRA workflow [here](https://autoresearch.github.io/autora/theorist/)
 - **Validation**: You cannot select `None` along with other options.
 
 ### 4. `experimentalists`
@@ -59,7 +59,7 @@ This project template helps configure and scaffold your experiment web applicati
   - autora[experimentalist-mixture]
   - autora[experimentalist-prediction-filter]
 - **Default**: `None`
-- **Description**: Select one or more experimentalist modules to include in your project. These are additional tools that help design and analyze experiments.
+- **Description**: Select one or more experimentalist modules to include in your project. These are additional tools that help design and analyze experiments. You can read more on experimentalists and their role in the AutoRA workflow [here](https://autoresearch.github.io/autora/experimentalist/)
 - **Validation**: Similar to the theorists, you cannot select `None` with other options.
 
 ### 5. `firebase`
