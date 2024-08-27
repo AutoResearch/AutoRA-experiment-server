@@ -12,9 +12,15 @@ To start the web app locally you can simply run the start script from a terminal
 
 The [autora_workflow.py](https://github.com/AutoResearch/autora-user-cookiecutter/blob/main/%7B%7B%20cookiecutter.__project_slug%20%7D%7D/researcher_hub/autora_workflow.py) file shows a basic example on how to run a closed loop autora experiment. Navigate [here](https://autoresearch.github.io/autora/) for more advanced options.
 
+## Major Technologies in Use
+
 ### ViteJS + NodeJS + npm 
 
 This project uses "vanilla" Javascript, the [`ViteJS`](https://vitejs.dev/guide/static-deploy.html#building-the-app) dev build server, and [`npm`](https://nodejs.org/en/learn/getting-started/an-introduction-to-the-npm-package-manager) for Javascript dependency management. The frontend is defined, including its dependencies, in the [`package.json`](package.json) file.
+
+### jsPsych
+
+The most critical dependency in the Javascript code is [`jsPsych`](https://www.jspsych.org/v7/) which defines the behavioral experiments. The Copier output here will initialize a `jsPsych timeline` in `main.js` based on your Copier questionnaire responses. The [jsPsych timeline documentation](https://www.jspsych.org/v7/overview/timeline/) thoroughly describes how to work with the timeline to define your trials.
 
 ### FastAPI
 
