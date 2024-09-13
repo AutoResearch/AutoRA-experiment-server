@@ -184,7 +184,7 @@ def write_to_js(jspsych_example_name: str, output_filepath: str) -> bool:
     output_file_text += "} \n\nexport default main\n"
 
     # Write to file
-    with open(output_filepath, "w") as js_file:
+    with open(output_filepath, "w", newline="\n") as js_file:
         js_file.write(output_file_text)
 
     return True
